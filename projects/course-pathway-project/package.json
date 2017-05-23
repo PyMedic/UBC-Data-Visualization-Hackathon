@@ -1,0 +1,41 @@
+{
+  "name": "course-pathway-project",
+  "version": "1.0.0",
+  "description": "Course Pathways Project",
+  "main": "./app.js",
+  "scripts": {
+    "start": "npm-run-all --parallel watch:build watch:server ",
+    "watch:build": "webpack --watch",
+    "watch:server": "nodemon ./app.js --exec babel-node --presets es2015,stage-2",
+    "serve": "NODE_ENV=production nodemon ./app.js --exec babel-node --presets es2015,stage-2",
+    "test": "mocha --compilers js:babel-register",
+    "build": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justin0022/course-pathway-project.git"
+  },
+  "author": "Alison Myers Sung Hwang Justin Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justin0022/course-pathway-project/issues"
+  },
+  "homepage": "https://github.com/justin0022/course-pathway-project#readme",
+  "dependencies": {
+    "csv": "^1.1.1",
+    "express": "^4.15.2",
+    "ramda": "^0.23.0"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "mocha": "^3.3.0",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2",
+    "webpack": "^2.5.1"
+  }
+}
