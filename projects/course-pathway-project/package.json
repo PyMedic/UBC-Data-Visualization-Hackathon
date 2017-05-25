@@ -23,6 +23,7 @@
   "homepage": "https://github.com/justin0022/course-pathway-project#readme",
   "dependencies": {
     "csv": "^1.1.1",
+    "csv-parse": "^1.2.0",
     "express": "^4.15.2",
     "ramda": "^0.23.0"
   },
