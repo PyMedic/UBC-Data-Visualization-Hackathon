@@ -1,9 +1,7 @@
 import R from 'ramda'
 
-const filterByCourse = (data) => R.filter(x => x.COURSE_NUMBER === course, data)
-
 const reduceData = R.reduce(
-    (accArr, curObj) => {
+    (accObj, curObj) => {
         const studentIdentifier = curObj.STUDENT_IDENTIFIER
 
         const course = curObj.COURSE_NUMBER
@@ -11,24 +9,21 @@ const reduceData = R.reduce(
         const courseSubject = curObj.COURSE_SUBJECT
         const percentGrade = curObj.PERCENT_GRADE
 
-        const courseData = {
+        if (typeof accObj[studentIdentifier] === 'undefined') { 
+            accObj[studentIdentifier] = []
+        }
+
+        accObj[studentIdentifier].push({
             "courseNumber": course,
             "relativeTerm": relativeTerm,
             "courseSubject": courseSubject,
             "percentGrade": percentGrade
-        }
+        })
 
-        if (typeof accArr[studentIdentifier] === "undefined") {
-            accArr[studentIdentifier] = []
-        }
-
-        accArr[studentIdentifier].push(courseData)
-
-        return accArr
+        return accObj
     }
 )
 
 export {
-    filterByCourse,
     reduceData
 }

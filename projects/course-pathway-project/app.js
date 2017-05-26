@@ -1,12 +1,14 @@
 import express from 'express'
-import pipeline from './server/pipeline'
+import readCSV from './server/readCSV'
 
 const app = express()
 
 app.use(express.static('dist'))
 
-pipeline('336A', (data) => {
-    console.log(data)
+app.get('/data', (req, res) => {
+    readCSV((data) => {
+        res.json(data)
+    })
 })
 
 app.listen(4000, () => {
