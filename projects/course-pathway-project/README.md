@@ -24,6 +24,14 @@ cd course-pathway-project
 npm install
 ```
 
+* Create a data folder
+
+```
+mkdir data
+```
+
+* Place data, converted to CSV format, into the data directory
+
 * Start node server
 
 ```
