@@ -1,8 +1,9 @@
 import initEventListeners from './eventListeners'
 import { getCourses } from './util'
 
-const controller = (data) => {
-    console.log(getCourses(data))
+const controller = (data, course = "ARTS210") => {
+    initEventListeners(getCourses(data))
+    
 }
 
 export default controller
