@@ -9,13 +9,13 @@ The goal of this project is create a useable/dynamic tool that allows exploratio
 * Clone the project from Command Line:
 
 ```
-git clone https://github.com/justin0022/course-pathway-project.git
+git clone https://github.com/tabulatedreams/UBC-Data-Visualization-Hackathon.git
 ```
 
-* CD into folder:
+* CD into correct subfolder folder:
 
 ```
-cd course-pathway-project
+cd projects/course-pathway-project
 ```
 
 * Install the dependencies:
