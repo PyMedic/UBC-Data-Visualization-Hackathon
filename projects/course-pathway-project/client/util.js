@@ -24,5 +24,6 @@ const getCourses = (data) => {
 }
 
 export {
-    getCourses
+    getCourses,
+    sortCourses
 }
