@@ -5,8 +5,7 @@ const createCourseName = (course) => course.courseSubject + course.courseNumber
 const filterByCourseName = (courseName) => R.filter(x => createCourseName(x) === courseName)
 const filterByRelativeTerm = (relativeTerm) => R.filter(course => course.relativeTerm === relativeTerm)
 
-// horribly ugly way to sort courses :(
-const sortCourses = (courses) => R.sort((a, b) => {
+const sortHelper = (a, b) => {
     let first = Number(a.slice(-3))
     let second = Number(b.slice(-3))
     if (R.test(/^[a-zA-Z]*$/, a.slice(-1))) {
@@ -16,7 +15,13 @@ const sortCourses = (courses) => R.sort((a, b) => {
         second = Number(b.slice(-4, -1))
     }
     return first - second
-}, courses)
+}
+
+// horribly ugly way to sort courses :(
+const sortCourses = (courses) => R.sort((a, b) => sortHelper(a, b), courses)
+
+const sortArrayOfCourses = (arrayOfCourses) => 
+    R.sort((a, b) => sortHelper(createCourseName(a), createCourseName(b)), arrayOfCourses)
 
 const getCourseNames = (data) => {
     const arrayOfCourses = []
@@ -64,15 +69,22 @@ const getBeforeCurrentAndAfter = (data, courseName) => {
     }, data.students)
 
     return { 
-        before: R.flatten(beforeArray), 
-        current: R.flatten(currentArray), 
-        after: R.flatten(afterArray) 
+        before: sortArrayOfCourses(R.flatten(beforeArray)), 
+        current: sortArrayOfCourses(R.flatten(currentArray)), 
+        after: sortArrayOfCourses(R.flatten(afterArray))
     }
+}
+
+const countNumberOfCourses = (arrayOfCourses) => {
+    const groupedByCourse = R.groupWith((a, b) => 
+        createCourseName(a) === createCourseName(b), arrayOfCourses)
+    console.log(groupedByCourse)
 }
 
 export {
     getCourseNames,
     sortCourses,
     getBeforeCurrentAndAfter,
-    createCourseName
+    createCourseName,
+    countNumberOfCourses
 }
