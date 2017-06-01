@@ -1,6 +1,6 @@
 import draw from './draw'
 import sampleD3 from './sampleD3Viz'
-import { getCourseNames, getBeforeCurrentAndAfter, countNumberOfCourses } from './util'
+import { getCourseNames, getBeforeCurrentAndAfter } from './util'
 
 const controller = (data, courseName = getCourseNames(data)[0]) => {
     
@@ -9,7 +9,7 @@ const controller = (data, courseName = getCourseNames(data)[0]) => {
 
     // returns frozen { before: [], current: [], after: []}
     const dataToViz = Object.freeze(getBeforeCurrentAndAfter(data, courseName))
-    countNumberOfCourses(dataToViz.before)
+    console.log(dataToViz)
     draw(dataToViz)
 }
 

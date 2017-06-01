@@ -33,6 +33,10 @@ const getCourseNames = (data) => {
     return sortCourses(R.uniq(arrayOfCourses))
 }
 
+const countNumberOfCourses = (arrayOfCourses) => (R.groupWith((a, b) => 
+    createCourseName(a) === createCourseName(b), arrayOfCourses))   
+
+
 // returns { before: [], current: [], after: []}.
 const getBeforeCurrentAndAfter = (data, courseName) => {
     const beforeArray = []
@@ -69,16 +73,10 @@ const getBeforeCurrentAndAfter = (data, courseName) => {
     }, data.students)
 
     return { 
-        before: sortArrayOfCourses(R.flatten(beforeArray)), 
-        current: sortArrayOfCourses(R.flatten(currentArray)), 
-        after: sortArrayOfCourses(R.flatten(afterArray))
+        before: countNumberOfCourses(sortArrayOfCourses(R.flatten(beforeArray))), 
+        current: countNumberOfCourses(sortArrayOfCourses(R.flatten(currentArray))), 
+        after: countNumberOfCourses(sortArrayOfCourses(R.flatten(afterArray)))
     }
-}
-
-const countNumberOfCourses = (arrayOfCourses) => {
-    const groupedByCourse = R.groupWith((a, b) => 
-        createCourseName(a) === createCourseName(b), arrayOfCourses)
-    console.log(groupedByCourse)
 }
 
 export {
