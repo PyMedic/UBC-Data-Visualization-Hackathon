@@ -2,8 +2,8 @@ import R from 'ramda'
 
 // helper functions
 const createCourseName = (course) => course.courseSubject + course.courseNumber
-const filterByCourseName = (course) => R.filter(x => createCourseName(x) === course)
-
+const filterByCourseName = (courseName) => R.filter(x => createCourseName(x) === courseName)
+const filterByRelativeTerm = (relativeTerm) => R.filter(course => course.relativeTerm === relativeTerm)
 
 // horribly ugly way to sort courses :(
 const sortCourses = (courses) => R.sort((a, b) => {
@@ -19,24 +19,60 @@ const sortCourses = (courses) => R.sort((a, b) => {
 }, courses)
 
 const getCourseNames = (data) => {
-    const courses = []
-    R.map(student =>
+    const arrayOfCourses = []
+    R.map(courses =>
         R.map(course => 
-            courses.push(createCourseName(course))
-        , student)
+            arrayOfCourses.push(createCourseName(course))
+        , courses)
     , data.students)
-    return sortCourses(R.uniq(courses))
+    return sortCourses(R.uniq(arrayOfCourses))
 }
 
-const getBeforeAndAfter = (data, course) => {
-    R.map(student => {
+// returns { before: [], current: [], after: []}.
+const getBeforeCurrentAndAfter = (data, courseName) => {
+    const beforeArray = []
+    const currentArray = []
+    const afterArray = []
 
-    }, data.student)
+    const addToArrays = (relativeTermOfCourse, courses) => {
+        const before = R.add(-1, relativeTermOfCourse)
+        const current = relativeTermOfCourse
+        const after = R.add(1, relativeTermOfCourse)
+
+        const filteredBefore = filterByRelativeTerm(before)(courses)
+        const filteredCurrent = filterByRelativeTerm(current)(courses)
+        const filteredAfter = filterByRelativeTerm(after)(courses)
+
+        if (!(R.isEmpty(filteredBefore))) {
+            beforeArray.push(filteredBefore)
+        }
+        if (!(R.isEmpty(filteredCurrent))) {
+            currentArray.push(filteredCurrent)
+        }
+        if (!(R.isEmpty(filteredAfter))) {
+            afterArray.push(filteredAfter)
+        }
+    }
+
+    R.map(courses => {
+        R.map(course => {
+            if (createCourseName(course) === courseName) {
+                const relativeTermOfCourse = course.relativeTerm
+                addToArrays(relativeTermOfCourse, courses)
+            }
+        }, courses)
+    }, data.students)
+
+    return { 
+        before: R.flatten(beforeArray), 
+        current: R.flatten(currentArray), 
+        after: R.flatten(afterArray) 
+    }
 }
 
 export {
     getCourseNames,
     sortCourses,
-    getBeforeAndAfter,
+    getBeforeCurrentAndAfter,
     createCourseName
 }
