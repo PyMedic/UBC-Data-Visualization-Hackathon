@@ -83,6 +83,5 @@ export {
     getCourseNames,
     sortCourses,
     getBeforeCurrentAndAfter,
-    createCourseName,
-    countNumberOfCourses
+    createCourseName
 }
