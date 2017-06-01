@@ -40,6 +40,16 @@ npm start
 
 * Should now be viewable [here](http://localhost:4000/index.html)
 
+* To run test suite
+```
+npm test
+```
+
+* To exit test suite
+```
+control + c
+```
+
 * To build production for faster performance
 
 ```

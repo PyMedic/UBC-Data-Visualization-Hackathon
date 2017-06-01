@@ -1,5 +1,10 @@
 import R from 'ramda'
 
+// helper functions
+const createCourseName = (course) => course.courseSubject + course.courseNumber
+const filterByCourseName = (course) => R.filter(x => createCourseName(x) === course)
+
+
 // horribly ugly way to sort courses :(
 const sortCourses = (courses) => R.sort((a, b) => {
     let first = Number(a.slice(-3))
@@ -13,17 +18,25 @@ const sortCourses = (courses) => R.sort((a, b) => {
     return first - second
 }, courses)
 
-const getCourses = (data) => {
+const getCourseNames = (data) => {
     const courses = []
     R.map(student =>
-        R.map(x => 
-            courses.push(x.courseSubject + x.courseNumber)
+        R.map(course => 
+            courses.push(createCourseName(course))
         , student)
     , data.students)
     return sortCourses(R.uniq(courses))
 }
 
+const getBeforeAndAfter = (data, course) => {
+    R.map(student => {
+
+    }, data.student)
+}
+
 export {
-    getCourses,
-    sortCourses
+    getCourseNames,
+    sortCourses,
+    getBeforeAndAfter,
+    createCourseName
 }

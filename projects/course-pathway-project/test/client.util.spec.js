@@ -18,3 +18,14 @@ describe('sortCourses', () => {
         assert.deepEqual(output, util.sortCourses(input))
     })
 })
+
+describe('createCourseName', () => {
+    it('takes in a course object and returns the name appended together', () => {
+        const courseObj = {
+            courseNumber: '330A',
+            courseSubject: 'SUBJ'
+        }
+        const expected = 'SUBJ330A'
+        assert.deepEqual(expected, util.createCourseName(courseObj))
+    })
+})
