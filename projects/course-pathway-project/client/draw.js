@@ -1,3 +1,5 @@
+import * as d3 from 'd3'
+
 // defining constants
 const margin = {
      top: 20,
@@ -9,9 +11,8 @@ const graphWidth = $('#graph').width()
 const height = 700 - margin.top - margin.bottom
 
 const draw = (data) => {
-    const before = data.before
-    const current = data.current
-    const after = data.after
+    console.log(data)
+    const nodes = data.nodes
 
     const svg = d3.select('#graph')
         .append('svg')
@@ -23,10 +24,25 @@ const draw = (data) => {
 
     const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + margin.top + ")")    
 
+    const tick = () => {
+        circle
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+    }
 
-
-
-
+    const force = d3.forceSimulation()
+        .nodes(nodes)
+        .force('center', d3.forceCenter(graphWidth /2, height / 2))
+        .force("charge", d3.forceManyBody())
+        .force("x", d3.forceX(0))
+        .force("y", d3.forceY(0))
+        .on("tick", tick)
+    
+    const circle = g.selectAll('circle')
+        .data(nodes)
+        .enter().append('circle')
+        .attr("r", (d) => d.numberOfCourses)
+        
 }
 
 export default draw

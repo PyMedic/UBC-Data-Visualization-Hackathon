@@ -1,9 +1,12 @@
 import R from 'ramda'
 
 // helper functions
-const createCourseName = (course) => course.courseSubject + course.courseNumber
-const filterByCourseName = (courseName) => R.filter(x => createCourseName(x) === courseName)
-const filterByRelativeTerm = (relativeTerm) => R.filter(course => course.relativeTerm === relativeTerm)
+const createCourseName = (course) => 
+    course.courseSubject + course.courseNumber
+const filterByCourseName = (courseName) => 
+    R.filter(x => createCourseName(x) === courseName)
+const filterByRelativeTerm = (relativeTerm) => 
+    R.filter(course => course.relativeTerm === relativeTerm)
 
 const sortHelper = (a, b) => {
     let first = Number(a.slice(-3))
@@ -75,7 +78,31 @@ const getBeforeCurrentAndAfter = (data, courseName) => {
     return { 
         before: countNumberOfCourses(sortArrayOfCourses(R.flatten(beforeArray))), 
         current: countNumberOfCourses(sortArrayOfCourses(R.flatten(currentArray))), 
-        after: countNumberOfCourses(sortArrayOfCourses(R.flatten(afterArray)))
+        after: countNumberOfCourses(sortArrayOfCourses(R.flatten(afterArray))),
+        courseName
+    }
+}
+
+// input: { before: [], current: [], after: [], courseName: ''}
+const convertToNodes = (data) => {
+    const arrayToNode = (array, timeString) => {
+        return R.map(arrayOfObjects => {
+            return {
+                numberOfCourses: arrayOfObjects.length,
+                courseNumber: arrayOfObjects[0].courseNumber,
+                courseSubject: arrayOfObjects[0].courseSubject,
+                time: timeString
+            }
+        }, array)
+    }
+
+    const nodes = R.concat(
+        arrayToNode(data.before, 'before'), arrayToNode(data.after, 'after')
+    )
+
+    return  {
+        nodes,
+        courseName: data.courseName
     }
 }
 
@@ -83,5 +110,6 @@ export {
     getCourseNames,
     sortCourses,
     getBeforeCurrentAndAfter,
-    createCourseName
+    createCourseName,
+    convertToNodes
 }
