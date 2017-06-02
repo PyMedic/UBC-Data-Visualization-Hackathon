@@ -1,6 +1,6 @@
 import httpGetRequest from './httpGetRequest'
 import controller from './controller'
-import { initSelector } from './setup'
+import { initSelector, initEventListener } from './setup'
 import { getCourseNames, getBeforeCurrentAndAfter } from './util'
 
 $(document).ready(function() {
@@ -11,7 +11,9 @@ $(document).ready(function() {
         // create the dropdown selector
         initSelector(getCourseNames(data))
 
-        // call controller, which handles the state
+        initEventListener(data)
+
+        // call controller, which handles the initial drawing
         controller(data)
     })
 })
