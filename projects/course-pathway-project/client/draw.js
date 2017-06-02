@@ -31,7 +31,7 @@ const draw = (data) => {
     }
 
     const forceCollide = d3.forceCollide()
-        .radius((d) => d.numberOfCourses + 1.5)
+        .radius((d) => d.numberOfCourses + 20)
         .iterations(1)
 
     const force = d3.forceSimulation()
@@ -46,7 +46,7 @@ const draw = (data) => {
     const circle = g.selectAll('circle')
         .data(nodes)
         .enter().append('circle')
-        .attr("r", (d) => d.numberOfCourses)
+        .attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*5), 2))
         
 }
 
