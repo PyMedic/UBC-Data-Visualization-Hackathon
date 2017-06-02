@@ -1,5 +1,4 @@
 import draw from './draw'
-import sampleD3 from './sampleD3Viz'
 import { getCourseNames, getBeforeCurrentAndAfter, convertToNodes } from './util'
 import R from 'ramda'
 
