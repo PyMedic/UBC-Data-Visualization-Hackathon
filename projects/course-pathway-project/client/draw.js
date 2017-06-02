@@ -30,10 +30,15 @@ const draw = (data) => {
             .attr("cy", function(d) { return d.y; });
     }
 
+    const forceCollide = d3.forceCollide()
+        .radius((d) => d.numberOfCourses + 1.5)
+        .iterations(1)
+
     const force = d3.forceSimulation()
         .nodes(nodes)
         .force('center', d3.forceCenter(graphWidth /2, height / 2))
         .force("charge", d3.forceManyBody())
+        .force("collide", forceCollide)
         .force("x", d3.forceX(0))
         .force("y", d3.forceY(0))
         .on("tick", tick)
