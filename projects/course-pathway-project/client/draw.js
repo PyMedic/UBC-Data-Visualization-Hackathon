@@ -31,22 +31,35 @@ const draw = (data) => {
     }
 
     const forceCollide = d3.forceCollide()
-        .radius((d) => d.numberOfCourses + 20)
+        .radius((d) => d.numberOfCourses + 10)
         .iterations(1)
 
-    const force = d3.forceSimulation()
-        .nodes(nodes)
-        .force('center', d3.forceCenter(graphWidth /2, height / 2))
+    const forceBefore = d3.forceSimulation()
+        .nodes(nodes.filter(d => d.time === 'before'))
+        .force('X', d3.forceX(20).strength(1))
+        .force('Y', (d) => { 
+            return d3.forceY(height).strength(1)
+        })
+        //.force('center', d3.forceCenter(graphWidth /2, height / 2))
         .force("charge", d3.forceManyBody())
         .force("collide", forceCollide)
-        .force("x", d3.forceX(0))
-        .force("y", d3.forceY(0))
         .on("tick", tick)
     
+    const forceAfter = d3.forceSimulation()
+        .nodes(nodes.filter(d => d.time === 'after'))
+        .force('X', d3.forceX(graphWidth).strength(1))
+        .force('Y', (d) => { 
+            return d3.forceY(height).strength(1)
+        })
+        //.force('center', d3.forceCenter(graphWidth /2, height / 2))
+        .force("charge", d3.forceManyBody().strength(1))
+        .force("collide", forceCollide)
+        .on("tick", tick)
+
     const circle = g.selectAll('circle')
         .data(nodes)
         .enter().append('circle')
-        .attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*5), 2))
+        .attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*8), 2))
         
 }
 
