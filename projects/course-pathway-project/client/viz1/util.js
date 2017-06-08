@@ -7,6 +7,10 @@ const filterByCourseName = (courseName) =>
     R.filter(x => createCourseName(x) === courseName)
 const filterByRelativeTerm = (relativeTerm) => 
     R.filter(course => course.relativeTerm === relativeTerm)
+const filterByRelativeTermBefore = (relativeTerm) =>
+    R.filter(course => course.relativeTerm <= relativeTerm)
+const filterByRelativeTermAfter = (relativeTerm) =>
+    R.filter(course => course.relativeTerm >= relativeTerm)
 
 const sortHelper = (a, b) => {
     let first = Number(a.slice(-3))
@@ -51,9 +55,9 @@ const getBeforeCurrentAndAfter = (data, courseName) => {
         const current = relativeTermOfCourse
         const after = R.add(1, relativeTermOfCourse)
 
-        const filteredBefore = filterByRelativeTerm(before)(courses)
+        const filteredBefore = filterByRelativeTermBefore(before)(courses)
         const filteredCurrent = filterByRelativeTerm(current)(courses)
-        const filteredAfter = filterByRelativeTerm(after)(courses)
+        const filteredAfter = filterByRelativeTermAfter(after)(courses)
 
         if (!(R.isEmpty(filteredBefore))) {
             beforeArray.push(filteredBefore)

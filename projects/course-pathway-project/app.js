@@ -5,7 +5,13 @@ const app = express()
 
 app.use(express.static('dist'))
 
-app.get('/data', (req, res) => {
+app.get('/viz1', (req, res) => {
+    readCSV((data) => {
+        res.json(data)
+    })
+})
+
+app.get('/viz2', (req, res) => {
     readCSV((data) => {
         res.json(data)
     })
