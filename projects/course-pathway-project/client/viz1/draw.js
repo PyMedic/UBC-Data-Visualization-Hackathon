@@ -1,14 +1,6 @@
 import * as d3 from 'd3'
-
-// defining constants
-const margin = {
-     top: 20,
-     right: 20,
-     bottom: 30,
-     left: 50
-}
-const graphWidth = $('#graph').width()
-const height = 700 - margin.top - margin.bottom
+import * as util from './util'
+import { margin, graphWidth, height, colour } from './constants'
 
 const draw = (data) => {
     console.log(data)
@@ -25,7 +17,7 @@ const draw = (data) => {
         .attr('viewBox', '0 0 ' + Math.min(graphWidth, height) + ' ' + 700)
         .attr('preserveAspectRatio', 'xMinYMin')
 
-    const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + (margin.top + 200) + ")")    
+    const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + (margin.top + 400) + ")")    
 
     const tick = () => {
         circle
@@ -73,8 +65,8 @@ const draw = (data) => {
         .enter().append('circle')
         .attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*8), 2))
         .style('fill', (d) => {
-            
-            return 'black'
+            //console.log(util.getFloorOfCourse(d.courseNumber))
+            return colour[util.getFloorOfCourse(d.courseNumber)]
         })
     
     // const curCourseCircle = g.selectAll('circle')

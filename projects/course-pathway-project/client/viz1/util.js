@@ -12,6 +12,7 @@ const filterByRelativeTermBefore = (relativeTerm) =>
 const filterByRelativeTermAfter = (relativeTerm) =>
     R.filter(course => course.relativeTerm >= relativeTerm)
 const getFloorOfCourse = (course) => {
+    course = String(course)
     const floor = (number) => Math.floor(Number(number)/100)*100
     if (R.test(/^[a-zA-Z]*$/, course.slice(-1))) {
         return floor(course.slice(-4,-1))
@@ -49,7 +50,6 @@ const getCourseNames = (data) => {
 
 const countNumberOfCourses = (arrayOfCourses) => (R.groupWith((a, b) => 
     createCourseName(a) === createCourseName(b), arrayOfCourses))   
-
 
 // returns { before: [], current: [], after: []}.
 const getBeforeCurrentAndAfter = (data, courseName) => {

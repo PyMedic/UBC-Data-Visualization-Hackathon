@@ -46,4 +46,9 @@ describe('getFloorOfCourse', () => {
         const expected = 100
         assert.deepEqual(expected, util.getFloorOfCourse(courseNumber))
     })
+    it('takes in course number and returns floor of course number', () => {
+        const courseNumber = 200
+        const expected = 200
+        assert.deepEqual(expected, util.getFloorOfCourse(courseNumber))
+    })
 })
