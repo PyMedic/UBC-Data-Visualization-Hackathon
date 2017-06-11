@@ -11,7 +11,7 @@ const graphWidth = $('#graph').width()
 const height = 700 - margin.top - margin.bottom
 
 const draw = (data) => {
-    //console.log(data)
+    console.log(data)
     const nodes = data.nodes
     const curCourse = {
         courseName: data.courseName
@@ -72,10 +72,10 @@ const draw = (data) => {
         .data(nodes)
         .enter().append('circle')
         .attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*8), 2))
-        // .style('fill', (d) => {
-        //     // Number(d.courseNumber.slice(0,3))
-        //     return 'black'
-        // })
+        .style('fill', (d) => {
+            
+            return 'black'
+        })
     
     // const curCourseCircle = g.selectAll('circle')
     //     .data([curCourse])

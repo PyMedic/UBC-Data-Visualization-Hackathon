@@ -11,7 +11,14 @@ const filterByRelativeTermBefore = (relativeTerm) =>
     R.filter(course => course.relativeTerm <= relativeTerm)
 const filterByRelativeTermAfter = (relativeTerm) =>
     R.filter(course => course.relativeTerm >= relativeTerm)
-
+const getFloorOfCourse = (course) => {
+    const floor = (number) => Math.floor(Number(number)/100)*100
+    if (R.test(/^[a-zA-Z]*$/, course.slice(-1))) {
+        return floor(course.slice(-4,-1))
+    } else {
+        return floor(course.slice(-3))
+    }
+}
 const sortHelper = (a, b) => {
     let first = Number(a.slice(-3))
     let second = Number(b.slice(-3))
@@ -115,5 +122,6 @@ export {
     sortCourses,
     getBeforeCurrentAndAfter,
     createCourseName,
-    convertToNodes
+    convertToNodes,
+    getFloorOfCourse
 }

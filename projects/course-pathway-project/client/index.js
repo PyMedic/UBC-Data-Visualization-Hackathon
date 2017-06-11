@@ -10,7 +10,6 @@ $(document).ready(function() {
             selectAll('svg').remove()
             Object.freeze(data)
             //console.log(data)
-            console.log('viz1')
             // create the dropdown selector
             initSelector(getCourseNames(data))
 
@@ -25,7 +24,6 @@ $(document).ready(function() {
             selectAll('svg').remove()
             Object.freeze(data)
             //console.log(data)
-            console.log('viz2')
             // create the dropdown selector
             initSelector(getCourseNames(data))
 

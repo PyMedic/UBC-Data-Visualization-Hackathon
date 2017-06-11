@@ -1,5 +1,5 @@
 import assert from 'assert'
-import * as util from '../client/util'
+import * as util from '../client/viz1/util'
 
 describe('sortCourses', () => {
     it('returns an empty array if passed an empty array', () => {
@@ -27,5 +27,23 @@ describe('createCourseName', () => {
         }
         const expected = 'SUBJ330A'
         assert.deepEqual(expected, util.createCourseName(courseObj))
+    })
+})
+
+describe('getFloorOfCourse', () => {
+    it('takes in course string with a letter at the end and returns floor of course number', () => {
+        const courseNumber = '330A'
+        const expected = 300
+        assert.deepEqual(expected, util.getFloorOfCourse(courseNumber))
+    })
+    it('takes in course number and returns floor of course number', () => {
+        const courseNumber = '330'
+        const expected = 300
+        assert.deepEqual(expected, util.getFloorOfCourse(courseNumber))
+    })
+    it('takes in course number and returns floor of course number', () => {
+        const courseNumber = '151A'
+        const expected = 100
+        assert.deepEqual(expected, util.getFloorOfCourse(courseNumber))
     })
 })
