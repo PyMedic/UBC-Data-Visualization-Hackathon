@@ -8,9 +8,9 @@ const filterByCourseName = (courseName) =>
 const filterByRelativeTerm = (relativeTerm) => 
     R.filter(course => course.relativeTerm === relativeTerm)
 const filterByRelativeTermBefore = (relativeTerm) =>
-    R.filter(course => course.relativeTerm <= relativeTerm)
+    R.filter(course => course.relativeTerm < relativeTerm)
 const filterByRelativeTermAfter = (relativeTerm) =>
-    R.filter(course => course.relativeTerm >= relativeTerm)
+    R.filter(course => course.relativeTerm > relativeTerm)
 const getFloorOfCourse = (course) => {
     course = String(course)
     const floor = (number) => Math.floor(Number(number)/100)*100

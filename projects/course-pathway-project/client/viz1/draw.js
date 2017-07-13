@@ -14,8 +14,8 @@ const draw = (data) => {
         .attr('style', 'display: block; margin: auto; margin-top: 30px;')
         .attr('width', '100%')
         .attr('height', height)
-        .attr('viewBox', '0 0 ' + Math.min(graphWidth, height) + ' ' + 700)
-        .attr('preserveAspectRatio', 'xMinYMin')
+        // .attr('viewBox', '0 0 ' + Math.min(graphWidth, height) + ' ' + 700)
+        // .attr('preserveAspectRatio', 'xMinYMin')
 
     const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + (margin.top + 400) + ")")    
 
@@ -46,7 +46,7 @@ const draw = (data) => {
     
     const forceAfter = d3.forceSimulation()
         .nodes(nodes.filter(d => d.time === 'after'))
-        .force('X', d3.forceX(graphWidth).strength(1))
+        .force('X', d3.forceX(graphWidth-margin.right*5).strength(1))
         .force('Y', (d) => { 
             return d3.forceY(-100).strength(1)
         })
@@ -57,7 +57,7 @@ const draw = (data) => {
 
     const forceCurrent = d3.forceSimulation()
         .nodes([curCourse])
-        .force('center', d3.forceCenter(graphWidth /2, height / 2))
+        .force('center', d3.forceCenter(graphWidth /2, height / 8))
         .on("tick", tick)
 
     const circle = g.selectAll('circle')
@@ -69,10 +69,10 @@ const draw = (data) => {
             return colour[util.getFloorOfCourse(d.courseNumber)]
         })
     
-    // const curCourseCircle = g.selectAll('circle')
-    //     .data([curCourse])
-    //     .enter().append('circle')
-    //     .attr('r', 10)
+    const curCourseCircle = g.selectAll('circle')
+        .data([curCourse])
+        .enter().append('circle')
+        .attr('r', 10)
 
 }
 

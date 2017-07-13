@@ -5,7 +5,7 @@ const margin = {
      left: 50
 }
 const graphWidth = $('#graph').width()
-const height = 700 - margin.top - margin.bottom
+const height = 1200 - margin.top - margin.bottom
 
 const colour = {
     '100': '#f6eff7',
