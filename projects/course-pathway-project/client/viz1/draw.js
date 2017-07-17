@@ -57,7 +57,7 @@ const draw = (data) => {
 
     const forceCurrent = d3.forceSimulation()
         .nodes([curCourse])
-        .force('center', d3.forceCenter(graphWidth /2, height / 8))
+        .force('center', d3.forceCenter(graphWidth /2, height / 10))
         .on("tick", tick)
 
     const circle = g.selectAll('circle')
@@ -73,7 +73,9 @@ const draw = (data) => {
         .data([curCourse])
         .enter().append('circle')
         .attr('r', 10)
-
+    
+    
+    
 }
 
 export default draw
