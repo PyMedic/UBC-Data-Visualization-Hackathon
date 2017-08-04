@@ -1,11 +1,14 @@
 
 import csv
 import networkx as nx
+from modularity_algorithm import get_modules
 
 f = "mockEnrollmentData.csv"
+f = "test_data.csv"
 
 nodes = []
-edges = {}
+edges = []
+weights = {}
 courses_per_student = {}
 
 with open(f, 'r') as csvfile:
@@ -24,37 +27,18 @@ nodes = set(nodes)
 for n in nodes:
     for m in nodes:
         if m != n:
-            if True:
-            # if (m,n) not in edges.keys():
+            if (m,n) not in edges:
+                edges.append((n,m))
                 number_of_courses = len(courses_per_student[n]&courses_per_student[m])
-                edges[(n,m)] = number_of_courses
+                weights[(n,m)] = number_of_courses
 
+def make_graph(nodes, weights, min_weight=1):
+    G = nx.Graph()
+    G.add_nodes_from(nodes)
+    G.add_weighted_edges_from([(edge[0],edge[1],w) for edge,w in weights.items() if w>=min_weight])
+    return G 
 
-#make the network!
-G = nx.graph()
-G.add_nodes_from(nodes)
-G.add_edges_from(edges.keys()) #test me!
-
-#do some clustering or modularity analysis here!
-
-
-
-
-
-
-#TESTING THE NETWORKS BELOW
-
-# values = edges.values()
-# values.sort()
-# print len(values)
-
-# for v in set(values):
-#     print v,values.count(v)
-
-# x = []
-# for n in nodes:
-#     x.append(len(courses_per_student[n]))
-    
-# x.sort()
-# print x
-
+G = make_graph(nodes,weights,min_weight=7)
+modules = get_modules(G,factor = 1.3)
+for m in modules:
+    print len(m)
