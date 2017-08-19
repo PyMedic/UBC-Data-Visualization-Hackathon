@@ -24,6 +24,35 @@ const reduceData = R.reduce(
     }
 )
 
+const reduceData_viz2 = R.reduce(
+    (accObj, curObj) => {
+        console.log("current data")
+        console.log(curObj)
+        const studentIdentifier = curObj.STUDENT_IDENTIFIER
+
+        const course = curObj.COURSE_NUMBER
+        const relativeTerm = curObj.RELATIVE_TERM
+        const courseSubject = curObj.COURSE_SUBJECT
+        const percentGrade = curObj.PERCENT_GRADE
+        const enrollmentNumber = 0
+        
+        if (typeof accObj[relativeTerm] === 'undefined') { 
+            accObj[relativeTerm] = []
+        }
+        
+        
+            accObj[relativeTerm].push({
+                "courseNumber": course,
+                "courseSubject": courseSubject,
+                "percentGrade": percentGrade,
+                "enrollmentNumber": enrollmentNumber
+            })
+        
+        return accObj
+    }
+)
+
 export {
-    reduceData
+    reduceData,
+    reduceData_viz2
 }

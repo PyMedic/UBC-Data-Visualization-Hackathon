@@ -3,6 +3,7 @@ import * as util from './util'
 import { margin, graphWidth, height, colour } from './constants'
 
 const draw = (data) => {
+console.log("inside draw")
     console.log(data)
     const nodes = data.nodes
     const curCourse = {
@@ -18,7 +19,6 @@ const draw = (data) => {
         // .attr('preserveAspectRatio', 'xMinYMin')
 
     const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + (margin.top + 400) + ")")    
-
     const tick = () => {
         circle
             .attr("cx", function(d) { return d.x; })

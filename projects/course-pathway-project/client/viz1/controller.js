@@ -8,7 +8,7 @@ const controller = (data, courseName = getCourseNames(data)[0]) => {
         getBeforeCurrentAndAfter,
         convertToNodes
     ) 
-
+    
     // initial draw
     draw(dataToViz(data, courseName))
 }

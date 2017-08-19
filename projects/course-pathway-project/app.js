@@ -1,5 +1,6 @@
 import express from 'express'
 import readCSV from './server/readCSV'
+import readCSV_viz2 from './server/readCSV_viz2'
 
 const app = express()
 
@@ -12,8 +13,10 @@ app.get('/viz1', (req, res) => {
 })
 
 app.get('/viz2', (req, res) => {
-    readCSV((data) => {
+    readCSV_viz2((data) => {
         res.json(data)
+        console.log("test");
+        console.log(res);
     })
 })
 

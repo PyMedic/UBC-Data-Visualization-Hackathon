@@ -14,4 +14,5 @@ const readCSV = (callback) => {
     fs.createReadStream(__dirname + '/../data/mockEnrollmentData.csv').pipe(parser)
 }
 
+
 export default readCSV

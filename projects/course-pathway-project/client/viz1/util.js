@@ -111,6 +111,9 @@ const convertToNodes = (data) => {
         arrayToNode(data.before, 'before'), arrayToNode(data.after, 'after')
     )
 
+console.log("nodes:")
+console.log(nodes)
+
     return  {
         nodes,
         courseName: data.courseName
