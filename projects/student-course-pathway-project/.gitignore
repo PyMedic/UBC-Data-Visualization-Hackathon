@@ -1,3 +1,5 @@
 mockEnrollmentData.csv
-test_data.csv
+mockEnrollmentNumber.csv
+enrollmentData_coursePairs.csv
+student_network_weight7.gml
 *.pyc
