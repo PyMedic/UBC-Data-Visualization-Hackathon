@@ -3,11 +3,15 @@ import * as util from './util'
 import { margin, graphWidth, height, colour } from './constants'
 
 const draw = (data) => {
-console.log("inside draw")
-    console.log(data)
-    const nodes = data.nodes
+//console.log("test start")
+//    console.log(data)
+//console.log("test end")
+    const nodes = data
+    
+console.log("nodes inside draw function")
+console.log(nodes)
     const curCourse = {
-        courseName: data.courseName
+        courseName: ""
     }
 
     const svg = d3.select('#graph')
@@ -15,10 +19,12 @@ console.log("inside draw")
         .attr('style', 'display: block; margin: auto; margin-top: 30px;')
         .attr('width', '100%')
         .attr('height', height)
-        // .attr('viewBox', '0 0 ' + Math.min(graphWidth, height) + ' ' + 700)
-        // .attr('preserveAspectRatio', 'xMinYMin')
+        .attr('viewBox', '0 0 ' + Math.min(graphWidth, height) + ' ' + 700)
+        .attr('preserveAspectRatio', 'xMinYMin')
 
-    const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + (margin.top + 400) + ")")    
+    const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + (margin.top + 400) + ")")
+
+
     const tick = () => {
         circle
             .attr("cx", function(d) { return d.x; })
@@ -34,7 +40,8 @@ console.log("inside draw")
         .iterations(1)
 
     const forceBefore = d3.forceSimulation()
-        .nodes(nodes.filter(d => d.time === 'before'))
+        //.nodes(nodes.filter(d => d.time === 'before'))
+        .nodes(nodes.filter(d => d.time === '1'))
         .force('X', d3.forceX(20).strength(1))
         .force('Y', (d) => { 
             return d3.forceY(-100).strength(1)
@@ -46,7 +53,7 @@ console.log("inside draw")
     
     const forceAfter = d3.forceSimulation()
         .nodes(nodes.filter(d => d.time === 'after'))
-        .force('X', d3.forceX(graphWidth-margin.right*5).strength(1))
+        .force('X', d3.forceX(graphWidth).strength(1))
         .force('Y', (d) => { 
             return d3.forceY(-100).strength(1)
         })
@@ -57,25 +64,23 @@ console.log("inside draw")
 
     const forceCurrent = d3.forceSimulation()
         .nodes([curCourse])
-        .force('center', d3.forceCenter(graphWidth /2, height / 10))
+        .force('center', d3.forceCenter(graphWidth /2, height / 2))
         .on("tick", tick)
 
     const circle = g.selectAll('circle')
         .data(nodes)
         .enter().append('circle')
-        .attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*8), 2))
+        .attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*8), 3))
         .style('fill', (d) => {
             //console.log(util.getFloorOfCourse(d.courseNumber))
             return colour[util.getFloorOfCourse(d.courseNumber)]
         })
     
-    const curCourseCircle = g.selectAll('circle')
-        .data([curCourse])
-        .enter().append('circle')
-        .attr('r', 10)
-    
-    
-    
+    // const curCourseCircle = g.selectAll('circle')
+    //     .data([curCourse])
+    //     .enter().append('circle')
+    //     .attr('r', 10)
+
 }
 
 export default draw

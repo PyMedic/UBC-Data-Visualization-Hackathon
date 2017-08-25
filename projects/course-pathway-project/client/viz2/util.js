@@ -8,9 +8,9 @@ const filterByCourseName = (courseName) =>
 const filterByRelativeTerm = (relativeTerm) => 
     R.filter(course => course.relativeTerm === relativeTerm)
 const filterByRelativeTermBefore = (relativeTerm) =>
-    R.filter(course => course.relativeTerm < relativeTerm)
+    R.filter(course => course.relativeTerm <= relativeTerm)
 const filterByRelativeTermAfter = (relativeTerm) =>
-    R.filter(course => course.relativeTerm > relativeTerm)
+    R.filter(course => course.relativeTerm >= relativeTerm)
 const getFloorOfCourse = (course) => {
     course = String(course)
     const floor = (number) => Math.floor(Number(number)/100)*100
@@ -50,6 +50,55 @@ const getCourseNames = (data) => {
 
 const countNumberOfCourses = (arrayOfCourses) => (R.groupWith((a, b) => 
     createCourseName(a) === createCourseName(b), arrayOfCourses))   
+
+
+const getRelativeTermCourseList = (data) => {
+    //console.log(data)
+    //return data
+    
+    //console.log("inside getRelativeTermCourseList")
+    const relativeTerm = data.relativeTerm
+    //console.log(relativeTerm)
+    const relativeTermCourseList = {}
+    const displayTerm = x => console.log("test")
+    R.forEach(displayTerm, relativeTerm)
+    //console.log("end getRelativeTermCourseList")
+    
+    for(var i in relativeTerm){
+        //console.log(i)
+        for(var j in data.relativeTerm[i]){
+            var relativeTermNumber = j;
+            //console.log(data.relativeTerm[x])
+            for(var k in data.relativeTerm[j]){
+                //console.log(data.relativeTerm[j][k].courseNumber)
+                //console.log(data.relativeTerm[j][k].courseSubject)
+                var courseNumber = data.relativeTerm[j][k].courseNumber
+                var courseSubject = data.relativeTerm[j][k].courseSubject
+                var courseName = courseSubject + " " + courseNumber
+                
+                if(typeof relativeTermCourseList[relativeTermNumber] === "undefined"){
+                    relativeTermCourseList[relativeTermNumber] = {}                  
+                }
+                
+                //if(typeof relativeTermCourseList.relativeTermNumber === "undefined"){
+                    //relativeTermCourseList[relativeTermNumber] = []
+                //    relativeTermCourseList.relativeTermNumber = relativeTermNumber
+                //}
+                
+                if(typeof relativeTermCourseList[relativeTermNumber][courseName] === "undefined"){
+                    //relativeTermCourseList[relativeTermNumber][courseName] = [courseName, 0]
+                    relativeTermCourseList[relativeTermNumber][courseName] = 0
+                }
+                else{
+                    relativeTermCourseList[relativeTermNumber][courseName] += 1
+                }
+            }
+        }
+    }
+    //console.log("after setup.js done")
+    //console.log(relativeTermCourseList)
+    return relativeTermCourseList
+}
 
 // returns { before: [], current: [], after: []}.
 const getBeforeCurrentAndAfter = (data, courseName) => {
@@ -111,13 +160,63 @@ const convertToNodes = (data) => {
         arrayToNode(data.before, 'before'), arrayToNode(data.after, 'after')
     )
 
-console.log("nodes:")
-console.log(nodes)
-
     return  {
         nodes,
         courseName: data.courseName
     }
+}
+
+// input: {[1][ARTS 101]{enrollment: 10}, ...}, 2:{}, ....}
+const convertToNodes2 = (data) => {
+    console.log(data)
+    const arrayToNode = (array, timeString) => {
+        return R.map(arrayOfObjects => {
+            return {
+                numberOfCourses: arrayOfObjects.length,
+                courseNumber: arrayOfObjects[0].courseNumber,
+                courseSubject: arrayOfObjects[0].courseSubject,
+                time: timeString
+            }
+        }, array)
+    }
+
+    //const nodes = R.concat(
+        
+        //arrayToNode(data.before, 'before'), arrayToNode(data.after, 'after')
+    //)
+    
+    const nodes = []
+    for(var i in data){
+        var termNumber = i
+        //nodes[termNumber] = []
+        for(var j in data[i]){    
+            //console.log(j)
+            var courseName = j
+            var enrollmentNumber = data[i][courseName]
+            
+            
+            var nodeObject = {
+                enrollment: enrollmentNumber,
+                courseName: courseName,
+                time: termNumber
+            }
+            
+            nodes.push(nodeObject)
+            //nodes[termNumber][courseName] = enrollmentNumber
+            //nodes[termNumber][courseName].push(enrollmentNumber)
+            //var testString = termNumber+" "+courseName+" "+enrollmentNumber
+            //console.log(testString)
+        }
+    }
+    
+    console.log("after nodes job")
+    console.log(nodes)
+
+    return nodes;
+    /*return  {
+        nodes,
+        courseName: data.courseName
+    }*/
 }
 
 export {
@@ -126,5 +225,7 @@ export {
     getBeforeCurrentAndAfter,
     createCourseName,
     convertToNodes,
-    getFloorOfCourse
+    convertToNodes2,
+    getFloorOfCourse,
+    getRelativeTermCourseList
 }
