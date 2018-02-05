@@ -3,8 +3,8 @@ import * as util from './util'
 import { margin, graphWidth, height, colour } from './constants'
 
 const draw = (data) => {
-//console.log("test start")
-//    console.log(data)
+console.log("test start")
+    console.log(data)
 //console.log("test end")
     const nodes = data
     
@@ -22,7 +22,7 @@ console.log(nodes)
         .attr('viewBox', '0 0 ' + Math.min(graphWidth, height) + ' ' + 700)
         .attr('preserveAspectRatio', 'xMinYMin')
 
-    const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + (margin.top + 400) + ")")
+    const g = svg.append('g').attr("transform", "translate(" + margin.left + "," + (margin.top + 20) + ")")
 
 
     const tick = () => {
@@ -32,11 +32,13 @@ console.log(nodes)
     }
 
     const forceCollideBefore = d3.forceCollide()
-        .radius((d) => d.numberOfCourses + 10)
+        //.radius((d) => d.numberOfCourses + 10)
+        .radius((d) => d.enrollment + 10)
         .iterations(1)
 
     const forceCollideAfter = d3.forceCollide()
-        .radius((d) => d.numberOfCourses + 10)
+        //.radius((d) => d.numberOfCourses + 10)
+        .radius((d) => d.enrollment + 10)
         .iterations(1)
 
     const forceBefore = d3.forceSimulation()
@@ -70,10 +72,11 @@ console.log(nodes)
     const circle = g.selectAll('circle')
         .data(nodes)
         .enter().append('circle')
-        .attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*8), 3))
+        //.attr("r", (d) => Math.pow(Math.log(d.numberOfCourses*8), 3))
+        .attr("r", (d) => Math.pow(Math.log(d.enrollment), 2.3))
         .style('fill', (d) => {
             //console.log(util.getFloorOfCourse(d.courseNumber))
-            return colour[util.getFloorOfCourse(d.courseNumber)]
+            return colour[util.getFloorOfCourse(d.enrollment)]
         })
     
     // const curCourseCircle = g.selectAll('circle')

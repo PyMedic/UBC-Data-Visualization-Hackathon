@@ -12,7 +12,9 @@ const readCSV = (callback) => {
             callback(jsonData)
     })
     fs.createReadStream(__dirname + '/../data/mockEnrollmentData.csv').pipe(parser)
+    //fs.createReadStream(__dirname + '/../data/testData.csv').pipe(parser)
 }
+
 
 
 export default readCSV
