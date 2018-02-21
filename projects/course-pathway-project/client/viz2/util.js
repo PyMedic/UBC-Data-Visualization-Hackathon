@@ -53,6 +53,7 @@ const countNumberOfCourses = (arrayOfCourses) => (R.groupWith((a, b) =>
 
 
 const getRelativeTermCourseList = (data) => {
+    //console.log("inside getRelativeTermCourseList(): ")
     //console.log(data)
     //return data
     
@@ -65,15 +66,17 @@ const getRelativeTermCourseList = (data) => {
     //console.log("end getRelativeTermCourseList")
     
     for(var i in relativeTerm){
-        //console.log(i)
-        for(var j in data.relativeTerm[i]){
-            var relativeTermNumber = j;
-            //console.log(data.relativeTerm[x])
-            for(var k in data.relativeTerm[j]){
+        //console.log("relative term i: "+i)
+        
+        //for(var j in data.relativeTerm[i]){
+            var relativeTermNumber = i;
+            //console.log("j: "+j)
+            //relativeTermCourseList[relativeTermNumber][courseName][enrollmentNumber] = 0
+            for(var k in data.relativeTerm[i]){
                 //console.log(data.relativeTerm[j][k].courseNumber)
                 //console.log(data.relativeTerm[j][k].courseSubject)
-                var courseNumber = data.relativeTerm[j][k].courseNumber
-                var courseSubject = data.relativeTerm[j][k].courseSubject
+                var courseNumber = data.relativeTerm[i][k].courseNumber
+                var courseSubject = data.relativeTerm[i][k].courseSubject
                 var courseName = courseSubject + " " + courseNumber
                 
                 if(typeof relativeTermCourseList[relativeTermNumber] === "undefined"){
@@ -87,13 +90,14 @@ const getRelativeTermCourseList = (data) => {
                 
                 if(typeof relativeTermCourseList[relativeTermNumber][courseName] === "undefined"){
                     //relativeTermCourseList[relativeTermNumber][courseName] = [courseName, 0]
-                    relativeTermCourseList[relativeTermNumber][courseName] = 0
+                    //relativeTermCourseList[relativeTermNumber][courseName] = courseName;
+                    relativeTermCourseList[relativeTermNumber][courseName] = {"enrollmentNumber": 1}
                 }
                 else{
-                    relativeTermCourseList[relativeTermNumber][courseName] += 1
+                    relativeTermCourseList[relativeTermNumber][courseName]["enrollmentNumber"] += 1
                 }
             }
-        }
+        //}
     }
     //console.log("after setup.js done")
     //console.log(relativeTermCourseList)
@@ -147,6 +151,7 @@ const getBeforeCurrentAndAfter = (data, courseName) => {
 const convertToNodes = (data) => {
     const arrayToNode = (array, timeString) => {
         return R.map(arrayOfObjects => {
+            
             return {
                 numberOfCourses: arrayOfObjects.length,
                 courseNumber: arrayOfObjects[0].courseNumber,
@@ -168,7 +173,7 @@ const convertToNodes = (data) => {
 
 // input: {[1][ARTS 101]{enrollment: 10}, ...}, 2:{}, ....}
 const convertToNodes2 = (data) => {
-    console.log(data)
+    //console.log(data)
     const arrayToNode = (array, timeString) => {
         return R.map(arrayOfObjects => {
             return {
@@ -192,13 +197,16 @@ const convertToNodes2 = (data) => {
         for(var j in data[i]){    
             //console.log(j)
             var courseName = j
-            var enrollmentNumber = data[i][courseName]
-            
+            var enrollmentNumber = data[i][courseName]["enrollmentNumber"]
+            //console.log("enrollmentNumber")
+            //console.log(enrollmentNumber)
             
             var nodeObject = {
                 enrollment: enrollmentNumber,
                 courseName: courseName,
-                time: termNumber
+                time: termNumber,
+                x: i*100,
+                y:Math.floor(Math.random() * (500 - 1 + 1) + 1)
             }
             
             nodes.push(nodeObject)
@@ -209,8 +217,8 @@ const convertToNodes2 = (data) => {
         }
     }
     
-    console.log("after nodes job")
-    console.log(nodes)
+    //console.log("after nodes job")
+    //console.log(nodes)
 
     return nodes;
     /*return  {

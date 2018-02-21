@@ -28,6 +28,10 @@ const reduceData_viz2 = R.reduce(
     (accObj, curObj) => {
         console.log("current data")
         console.log(curObj)
+
+        //console.log("accObj")
+        //console.log(accObj)
+
         const studentIdentifier = curObj.STUDENT_IDENTIFIER
 
         const course = curObj.COURSE_NUMBER
@@ -39,15 +43,18 @@ const reduceData_viz2 = R.reduce(
         if (typeof accObj[relativeTerm] === 'undefined') { 
             accObj[relativeTerm] = []
         }
-        
+
+        /*if (typeof accObj[relativeTerm][courseSubject][course] === 'undefined') { 
+            accObj[relativeTerm] = []
+        }*/
         
             accObj[relativeTerm].push({
+                "relativeTerm": relativeTerm,
                 "courseNumber": course,
                 "courseSubject": courseSubject,
-                "percentGrade": percentGrade,
-                "enrollmentNumber": enrollmentNumber
+                "percentGrade": percentGrade
             })
-        
+            
         return accObj
     }
 )

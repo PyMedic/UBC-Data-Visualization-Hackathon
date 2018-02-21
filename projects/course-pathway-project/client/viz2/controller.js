@@ -3,11 +3,13 @@ import { getCourseNames, getBeforeCurrentAndAfter, convertToNodes2, getRelativeT
 import R from 'ramda'
 
 const controller = (data) => {
-
+    console.log("initial data: ")
+    console.log(data)
+    
     const relativeTermCourseList = getRelativeTermCourseList(data)
-    //console.log("processed data")
-    //console.log(processedData)
-    //console.log("===end===")
+    console.log("processed data")
+    console.log(relativeTermCourseList)
+    console.log("===end===")
     const nodeList = convertToNodes2(relativeTermCourseList)
     
     

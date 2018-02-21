@@ -5,10 +5,15 @@ h1#title {
 #graph {
     display: inline-block;
     width: 90%;
+    background-color: yellow;
 }
 #legend {
     display: inline-block;
     width: 10%
+}
+
+svg {
+  background-color: green;
 }
 
 /* demo app */
